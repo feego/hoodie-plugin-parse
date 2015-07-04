@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Users</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="images/favicon_128.png">
+    <!--[if IE]><link rel="shortcut icon" href="images/favicon.ico"><![endif]-->
+
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="components/parse-plugin-dashboard/parse-plugin-dashboard.html">
+    <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
+
+    <style>
+        body {
+            font-family: Roboto, 'Noto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+            color: #424242;
+            line-height: 20px;
+            font-size: 13px;
+        }
+        paper-header-panel {
+            padding: 15px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="fullbleed layout vertical">
+    <paper-header-panel class="flex" mode="waterfall">
+        <paper-toolbar>
+            <h1>Parse</h1>
+        </paper-toolbar>
+        <parse-plugin-dashboard></parse-plugin-dashboard>
+    </paper-header-panel>
+</body>
+</html>

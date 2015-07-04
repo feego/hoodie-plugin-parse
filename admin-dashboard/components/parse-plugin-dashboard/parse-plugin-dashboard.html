@@ -1,0 +1,118 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<script src="/_api/_plugins/_assets/scripts/admin-dashboard-uikit.js"></script>
+
+<dom-module id="parse-plugin-dashboard">
+    <style>
+        :host {
+            /* layout properties for the host element */
+            @apply(--layout-vertical);
+        }
+        [horizontal-layout] {
+            @apply(--layout-horizontal);
+        }
+        [flex] {
+            @apply(--layout-flex);
+        }
+        [end] {
+            @apply(--layout-end);
+        }
+        .update-button {
+            margin: 10px 5px 5px 10px;
+            color: rgb(84, 113, 147);
+        }
+        .update-button::shadow paper-material {
+            padding: 6px 13px 5px 13px;
+            border-radius: 1px;
+        }
+    </style>
+    <template>
+        <div horizontal-layout end>
+            <paper-input id="parseAPIKeyInput" error-message="Invalid input!" label="Parse Application ID" flex
+                         value="{{parseAPIKey::input}}"></paper-input>
+            <paper-button raised class="update-button" on-tap="updateSettings">Update</paper-button>
+        </div>
+        <div horizontal-layout end>
+            <paper-input error-message="Invalid input!" label="Parse Javascript Key" flex
+                         value="{{parseJSKey::input}}"></paper-input>
+            <paper-button raised class="update-button" on-tap="updateSettings">Update</paper-button>
+        </div>
+        <div horizontal-layout end>
+            <paper-input error-message="Invalid input!" label="Parse REST Key" flex
+                         value="{{parseRESTKey::input}}"></paper-input>
+            <paper-button raised class="update-button" on-tap="updateSettings">Update</paper-button>
+        </div>
+        <div horizontal-layout end>
+            <paper-input error-message="Invalid input!" label="SocketIO Server URL" flex
+                         value="{{socketIOURL::input}}"></paper-input>
+            <paper-button raised class="update-button" on-tap="updateSettings">Update</paper-button>
+        </div>
+        <div horizontal-layout end>
+            <paper-input error-message="Invalid input!" label="Synched Public Collections" flex
+                         value="{{collectionsToSyncOnInit::input}}"></paper-input>
+            <paper-button raised class="update-button" on-tap="updateSettings">Update</paper-button>
+        </div>
+    </template>
+    <script>
+        (function() {
+            var hoodieAdmin = top.hoodieAdmin
+
+            function getConfig() {
+                return hoodieAdmin.request('GET', '/app/config')
+            }
+            function setConfig(doc) {
+                return hoodieAdmin.request('PUT', '/app/config', {
+                    data: JSON.stringify(doc)
+                })
+            }
+            function updateConfig(obj) {
+                getConfig().then(function(doc) {
+                    doc.config = $.extend(doc.config, obj)
+                    return setConfig(doc)
+                })
+            }
+
+            Polymer({
+                is: "parse-plugin-dashboard",
+                properties: {
+                    parseAPIKey: {
+                        type: String
+                    },
+                    parseJSKey: {
+                        type: String
+                    },
+                    parseRESTKey: {
+                        type: String
+                    },
+                    socketIOURL: {
+                        type: String
+                    },
+                    collectionsToSyncOnInit: {
+                        type: String
+                    }
+                },
+                attached: function () {
+                    getConfig().then(function(doc) {
+                        this.parseAPIKey = doc.config.parsePlugin__parseAPIKey
+                        this.parseJSKey = doc.config.parsePlugin__parseJSKey
+                        this.parseRESTKey = doc.config.parsePlugin__parseRESTKey
+                        this.socketIOURL = doc.config.parsePlugin__socketIOUrl
+                        this.collectionsToSyncOnInit = doc.config.parsePlugin__collectionsToSyncOnInit.join(" ")
+                    }.bind(this))
+                },
+                updateSettings: function() {
+                    var config = {}
+                    config.parsePlugin__parseAPIKey = this.parseAPIKey
+                    config.parsePlugin__parseJSKey = this.parseJSKey
+                    config.parsePlugin__parseRESTKey = this.parseRESTKey
+                    config.parsePlugin__socketIOUrl = this.socketIOURL
+                    config.parsePlugin__collectionsToSyncOnInit = this.collectionsToSyncOnInit.split(" ")
+                    updateConfig(config)
+                }
+            })
+        })()
+    </script>
+</dom-module>
