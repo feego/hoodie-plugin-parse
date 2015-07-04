@@ -1,8 +1,8 @@
 {
   "name": "hoodie-plugin-parse",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "index.js",
-  "description": "Hoodie plugin for Parse data integration",
+  "description": "Parse data sync plugin for Hoodie.",
   "devDependencies": {
     "MD5": "^1.2.1",
     "hoodie-plugin-users": "^2.1.4",

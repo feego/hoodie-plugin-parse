@@ -1,6 +1,5 @@
-# Hoodie Facebook Login Plugin
-
-> Use Facebook credentials to login into your hoodie app.
+# Parse Hoodie Plugin
+> Parse data sync plugin for Hoodie.
 
 #### Installation
 
