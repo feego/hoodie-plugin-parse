@@ -15,6 +15,15 @@ var PARSE_APPLICATION_ID = 'PARSE_APPLICATION_ID'
 var PARSE_JAVASCRIPT_KEY = 'PARSE_JAVASCRIPT_KEY'
 ```
 
+To enable the real-time data sync between the data stored on Hoodie and on Parse, the plugin subscribes a SocketIO channel which will receive a message each time a data collection is changed on Parse. To use this feature, you must use the Parse's Cloud Code "afterSave" events to notify a SocketIO server that will later publish the corresponding notifications on the SocketIO channel this plugin is subscribing. The messages received on the plugin must respect the following pattern:
+
+```js
+{
+    collection: 'collectionName',
+    permissions: ['parseUserId1', 'parseUserId2', 'parseUserIdN']
+}
+```
+
 #### Front-end API
 
 ```js
